@@ -7,4 +7,5 @@
     <string name="title">Title</string>
     <string name="add_portal">Add Portal</string>
     <string name="button">Button</string>
+    <string name="portal">TextView</string>
 </resources>

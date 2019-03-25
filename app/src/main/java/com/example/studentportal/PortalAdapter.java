@@ -1,19 +1,23 @@
 package com.example.studentportal;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.List;
 
 public class PortalAdapter extends RecyclerView.Adapter<PortalAdapter.ViewHolder> {
 
-    private List<Button> portalList;
+    private Context context;
+    private List<Portal> portalList;
 
-    public PortalAdapter(List<Button> portalList) {
+    public PortalAdapter(Context context, List<Portal> portalList) {
+        this.context = context;
         this.portalList = portalList;
     }
 
@@ -27,6 +31,16 @@ public class PortalAdapter extends RecyclerView.Adapter<PortalAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
+        viewHolder.portal.setText(portalList.get(viewHolder.getAdapterPosition()).getTitle());
+        viewHolder.portal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, WebActivity.class);
+                String url = portalList.get(viewHolder.getAdapterPosition()).getUrl();
+                intent.putExtra("url", url);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -36,11 +50,11 @@ public class PortalAdapter extends RecyclerView.Adapter<PortalAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private Button button;
+        private TextView portal;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            button = itemView.findViewById(R.id.button);
+            portal = itemView.findViewById(R.id.tv_portal);
         }
     }
 }
